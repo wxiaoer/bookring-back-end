@@ -31,4 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# user define ignore
 /src/main/resources/static/
+/out/
