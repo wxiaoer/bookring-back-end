@@ -34,4 +34,3 @@ build/
 
 # user define ignore
 /src/main/resources/static/
-/out/
