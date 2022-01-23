@@ -8,6 +8,8 @@ public class Book {
   private String name;
   private long allPage;
   private long page;
+  private String cfi;
+  private String type;
   private String classify;
   private String netUrlType;
   private String netUrl;
@@ -56,6 +58,24 @@ public class Book {
 
   public void setPage(long page) {
     this.page = page;
+  }
+
+
+  public String getCfi() {
+    return cfi;
+  }
+
+  public void setCfi(String cfi) {
+    this.cfi = cfi;
+  }
+
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 
 
