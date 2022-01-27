@@ -49,4 +49,7 @@ public class UserService {
     }
 
 
+    public void feedback(long id, String feedbackString) throws  Exception {
+        userDao.feedback(id,feedbackString);
+    }
 }

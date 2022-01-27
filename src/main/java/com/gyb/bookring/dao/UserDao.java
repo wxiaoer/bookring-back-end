@@ -27,4 +27,7 @@ public interface UserDao {
 
     @Select("select * from user where  email=#{email}")
     List<User> listByEmail(@Param("email") String email) throws Exception;
+
+    @Insert("insert into feedback(userId,feedback) values (#{id},#{feedbackString})")
+    void feedback(long id, String feedbackString);
 }
