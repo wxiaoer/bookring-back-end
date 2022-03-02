@@ -34,7 +34,7 @@ public class BookController {
             Book optionBook = JSON.parseObject(JSON.toJSONString(optionParam.get("book")), Book.class);
             User verifiedUser = userService.login(verifyUser);
             if (verifiedUser != null) {
-                List<Book> sameNameBooks = bookService.listByName(optionBook.getName());
+                List<Book> sameNameBooks = bookService.listByNameAndUserId(optionBook.getName(),verifiedUser.getId());
                 if (sameNameBooks.size() > 0) {
                     return new Result("Book add failed, already have this book in Bookring");
                 } else {
@@ -111,6 +111,39 @@ public class BookController {
                 try {
                     List<Book> bookList = bookService.list(verifiedUser.getId());
                     return new Result(bookList);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return new Result(unHandelFailedResponse);
+                }
+            }else{
+                return new Result("Not found your account info!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(unHandelFailedResponse);
+        }
+    }
+
+    @RequestMapping(value = "/pageGet", method = RequestMethod.POST)
+    public Result pageGet(@RequestBody Map<String, Object> optionParam) {
+        try {
+            User verifyUser = JSON.parseObject(JSON.toJSONString(optionParam.get("user")), User.class);
+            String bookId = JSON.toJSONString(optionParam.get("bookId"));
+            User verifiedUser = userService.login(verifyUser);
+            if (verifiedUser != null) {
+                try {
+                    Book book = bookService.getByUserIdAndBookId(verifiedUser.getId(),bookId);
+                    if(book!=null){
+                        if("pdf".equals(book.getType())){
+                            return new Result(true,"",book.getPage());
+                        }else if("epub".equals(book.getType())){
+                            return new Result(true,"",book.getPage()+"-"+book.getCfi());
+                        }else{
+                            return new Result("Book type error!");
+                        }
+                    }else{
+                        return new Result("Book not found!");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     return new Result(unHandelFailedResponse);

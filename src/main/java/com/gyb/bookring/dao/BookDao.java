@@ -27,4 +27,11 @@ public interface BookDao {
 
     @Select("select * from book where name = #{name}")
     List<Book> listByName(@Param("name") String name) throws Exception;
+
+    @Select("select * from book where id=#{bookId} and user_id=#{userId}")
+    Book getByUserIdAndBookId(long userId, String bookId) throws Exception;
+
+    @Select("select * from book where user_id=#{userId} and name = #{name}")
+    List<Book> listByNameAndUserId(String name,long userId)throws Exception;
+
 }

@@ -45,4 +45,11 @@ public class BookService {
     }
 
 
+    public Book getByUserIdAndBookId(long userId, String bookId) throws Exception {
+        return bookDao.getByUserIdAndBookId(userId,bookId);
+    }
+
+    public List<Book> listByNameAndUserId(String name, long userId)throws Exception {
+        return bookDao.listByNameAndUserId(name, userId);
+    }
 }
