@@ -4,8 +4,10 @@ import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import org.apache.tomcat.websocket.server.WsSci;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 
@@ -46,5 +48,22 @@ public class BookringApplication {
         //监听到http的端口号后转向到的https的端口号,也就是项目配置的port
         connector.setRedirectPort(443);
         return connector;
+    }
+
+    /**
+     * 创建wss协议接口
+     *
+     * @return
+     */
+    @Bean
+    public TomcatContextCustomizer tomcatContextCustomizer() {
+        System.out.println("websocket init");
+        return new TomcatContextCustomizer() {
+            @Override
+            public void customize(Context context) {
+                System.out.println("init   customize");
+                context.addServletContainerInitializer(new WsSci(), null);
+            }
+        };
     }
 }
